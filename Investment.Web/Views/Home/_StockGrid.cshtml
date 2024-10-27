@@ -4,11 +4,11 @@
     <thead class="thead-dark">
         <tr>
             <th scope="col">ID</th>
-            <th scope="col">Price per Share</th>
             <th scope="col">Total Purchased</th>
-            <th scope="col">Purchase Date</th>
             <th scope="col">Remaining Shares</th>
             <th scope="col">Remaining %</th>
+            <th scope="col">Price per Share</th>
+            <th scope="col">Purchase Date</th>
         </tr>
     </thead>
     <tbody>
@@ -16,23 +16,23 @@
         {
             <tr>
                 <td>@stock.Id</td>
-                <td>@stock.PricePerShare.ToString("C2")</td>
                 <td>@stock.OriginalShares</td>
-                <td>@stock.PurchaseDate.ToString("MM/dd/yyyy")</td>
                 <td>@stock.Shares</td>
                 <td>
                     <div class="progress position-relative" style="height: 25px; width: 100px; margin: auto; border: 1px solid #ddd; border-radius: 4px;">
-                        <div class="progress-bar bg-primary" role="progressbar" 
-                             style="width: @stock.RemainingPercentage%;" 
-                             aria-valuenow="@stock.RemainingPercentage" 
+                        <div class="progress-bar bg-primary" role="progressbar"
+                             style="width: @stock.RemainingPercentage%;"
+                             aria-valuenow="@stock.RemainingPercentage"
                              aria-valuemin="0" aria-valuemax="100">
                         </div>
-                        <span class="position-absolute w-100" 
+                        <span class="position-absolute w-100"
                               style="color: @(stock.RemainingPercentage > 50 ? "#FFF" : "#000"); font-weight: bold; line-height: 25px; top: 0; left: 0;">
                             @stock.RemainingPercentage%
                         </span>
                     </div>
                 </td>
+                <td>@stock.PricePerShare.ToString("C2")</td>
+                <td>@stock.PurchaseDate.ToString("MM/dd/yyyy")</td>
             </tr>
         }
     </tbody>

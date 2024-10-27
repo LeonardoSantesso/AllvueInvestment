@@ -34,7 +34,7 @@
                 </div>
                 <hr />
                 <div class="d-flex justify-content-between font-weight-bold" style="color: @(Model.TotalProfit < 0 ? "red" : "green")">
-                    <span>Total Profit:</span>
+                    <span>Total Profit / Loss: </span>
                     <span>@(Model.TotalProfit < 0 ? "-" : "+") @Math.Abs(Model.TotalProfit).ToString("C2")</span>
                 </div>
             </div>
