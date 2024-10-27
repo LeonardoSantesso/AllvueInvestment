@@ -1,0 +1,83 @@
+﻿@model List<Investment.Core.DTOs.SaleRecordDto>
+
+@{
+    ViewData["Title"] = "Sale Records";
+
+    var totalProfit = Model.Sum(x => x.TotalProfit);
+    var averageCostBasis = Model.Any() ? Model.Average(x => x.CostBasisPerSoldShare) : 0;
+    var profitClass = totalProfit < 0 ? "text-danger" : "text-success";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Sale Records</h2>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Sale Date</th>
+                    <th scope="col">Total Cost (Purchase Price)</th>
+                    <th scope="col">Total Sale Value (Selling Price)</th>
+                    <th scope="col">Total Profit/Loss</th>
+                    <th scope="col">Cost Basis Per Sold Share</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var stock in Model)
+                {
+                    <tr>
+                        <td>@stock.Id</td>
+                        <td>@stock.SaleDate.ToString("MM/dd/yyyy")</td>
+                        <td>@stock.TotalCost.ToString("C2")</td>
+                        <td>@stock.TotalSaleValue.ToString("C2")</td>
+                        <td class="font-weight-bold">
+                            <span class="@(stock.TotalProfit < 0 ? "text-danger" : "text-success")">
+                                @(Math.Abs(stock.TotalProfit).ToString("C2"))
+                            </span>
+                        </td>
+                        <td>@stock.CostBasisPerSoldShare.ToString("C2")</td>
+                        <td class="text-center">
+                            <a href="javascript:void(0);" class="btn btn-primary" onclick="showModalSaleRecordDetails(@stock.Id)">
+                                <i class="fas fa-eye"></i> View
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="7" class="text-center text-muted font-italic">No records available</td>
+                </tr>
+            }
+            </tbody>
+            <tfoot>
+                <tr class="font-weight-bold" style="background-color: #f8f9fa;">
+                    <td colspan="2" class="text-right">Summary:</td>
+                    <td>@Model.Sum(s => s.TotalCost).ToString("C2")</td>
+                    <td>@Model.Sum(s => s.TotalSaleValue).ToString("C2")</td>
+                    <td class="@(Model.Sum(s => s.TotalProfit) < 0 ? "text-danger" : "text-success")">
+                        @(Math.Abs(Model.Sum(s => s.TotalProfit)).ToString("C2"))
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    // Show a modal of sale record details
+    function showModalSaleRecordDetails(id) {
+
+        function callBackModalSaleRecordDetails(data) { }
+
+        var url = '@Url.Action("ModalSaleRecordDetails", "SaleRecords")' + "?id=" + id;
+        CreateModal('modalSaleRecordDetails', url, 'modal-lg', { fnClose: callBackModalSaleRecordDetails });
+    }
+</script>

@@ -1,0 +1,103 @@
+﻿@model List<Investment.Core.DTOs.StockLotDto>
+
+@{
+    ViewData["Title"] = "Stock List";
+}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Available Stock Lots</h2>
+
+    <div class="d-flex justify-content-between mb-3">
+        <button id="simulateSale" class="btn btn-primary">
+            <i class="fas fa-calculator mr-2"></i> Simulate Sale
+        </button>
+
+        <button id="showCreateStockLot" class="btn btn-success">
+            <i class="fas fa-plus mr-6"></i>New Stock Lot
+        </button>
+    </div>
+
+    <div class="table-responsive" id="stockGrid">
+        @await Html.PartialAsync("_StockGrid", Model)
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#simulateSale").click(function () {            
+            showModalSimulateSale();
+        });
+
+        $("#showCreateStockLot").click(function () {
+            showModalCreateStockLot();
+        });
+    });
+
+    function deleteStockLot(id){
+        confirmDeleteMessage('Confirm?', 'Are you sure you want to delete this stock lot?','Yes', 'No', function () { confirmDelete(id); });
+    }
+
+    function confirmDelete(id){
+        CallAjax('@Url.Action("DeleteStockLot", "Home")' + '?id=' + id, {
+            type: 'GET',
+            contentType: 'application/json',
+            data: JSON.stringify({ id: id }),
+            fnDone: function (response) {
+            if (response.isSuccess) {
+                showMessage("1", response.message.message);
+                RefreshGrid();
+            } else {
+                showMessage("3", response.error.message);
+            }
+            },
+            fnError: function (xhr, ajaxOptions, thrownError) {
+                showMessage("3", "Error: " + xhr.statusText);
+            }
+        });
+    }
+
+    function RefreshGrid() {
+        CallAjax('@Url.Action("GetStocks", "Home")', {
+            type: 'GET',
+            fnDone: function (data) {
+                $('#stockGrid').html(data);
+            },
+            fnError: function () {
+                alert("Failed to refresh the grid.");
+            }
+        });
+    }
+
+    // Show a modal Calculate Sell Results
+    function showModalSimulateSale() {
+
+        function callBackModalSimulateSale(data) {
+            console.log("Modal closed", data);
+        }
+                
+        var url = '@Url.Action("ModalSimulateSale", "Home")';
+        CreateModal('modalSimulateSale', url, 'modal-md', { fnClose: callBackModalSimulateSale });
+    }
+
+    // Show a modal create stock lot
+    function showModalCreateStockLot() {
+
+        function callBackModalCreateStockLot(data) {
+            console.log("Modal closed", data);
+        }
+                
+        var url = '@Url.Action("ModalCreateStockLot", "Home")';
+        CreateModal('modalCreateStockLot', url, 'modal-md', { fnClose: callBackModalCreateStockLot });
+    }
+</script>
+
+<style>
+    #simulateSale {
+        background-color: #007bff;
+        border: none;
+    }
+    #showCreateStockLot {
+        background-color: #28a745;
+        border: none;
+    }
+</style>

@@ -1,0 +1,95 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Investment.Core.DTOs.StockLotDto;
+
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title mt-0" id="myModalLabel">Add New Stock Lot</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">X</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="container">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <form asp-action="CreateStockLot" method="post" class="p-3" id="formCreateStockLot">
+                        <div class="form-group">
+                            <label asp-for="Shares" class="font-weight-bold"></label>
+                            <input asp-for="Shares" class="form-control" min="1" required />
+                            <span asp-validation-for="Shares" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="PricePerShare" class="font-weight-bold"></label>
+                            <input asp-for="PricePerShare" class="form-control" step="0.01" required />
+                            <span asp-validation-for="PricePerShare" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="PurchaseDate" class="font-weight-bold"></label>
+                            <input asp-for="PurchaseDate" type="date" class="form-control" required />
+                            <span asp-validation-for="PurchaseDate" class="text-danger"></span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+        <button type="submit" form="formCreateStockLot" class="btn btn-primary">
+            <i class="fas fa-save"></i> Save
+        </button>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('form').on('submit', function (e) {
+            e.preventDefault();
+            let token = $('input[name="__RequestVerificationToken"]').val();
+            let formSubmissionData = formDataToJson(this);
+            
+            CallAjax('@Url.Action("CreateStockLot", "Home")', {
+                contentType: 'application/json',
+                data: formSubmissionData,
+                headers: { 'RequestVerificationToken': token },
+                fnDone: function (response) {
+                    if (response.isSuccess) {
+                        RefreshGrid();
+                        CloseModal('modalCreateStockLot');
+                        showMessage("1", response.message.message);
+                    } else {
+                        showMessage("3", response.error.message);
+                        $("#calculator").show();
+                        $("#results").hide();
+                    }
+                },
+                fnError: function (xhr, ajaxOptions, thrownError) {
+                    showMessage("3", xhr.statusText);
+                }
+            });
+        });
+    });    
+</script>
+
+<style>
+    .modal-content .form-group label {
+        font-size: 0.9rem;
+        color: #495057;
+    }
+
+    .modal-content .form-control {
+        font-size: 1rem;
+    }
+
+    .modal-content .btn-primary {
+        background-color: #007bff;
+        border: none;
+    }
+
+    .modal-footer {
+        border-top: none;
+    }
+</style>

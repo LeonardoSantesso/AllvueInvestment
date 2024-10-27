@@ -1,0 +1,31 @@
+﻿@model List<Investment.Core.DTOs.StockLotDto>
+
+<table class="table table-striped table-hover text-center">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Shares</th>
+        <th scope="col">Price per Share</th>
+        <th scope="col">Purchase Date</th>
+        <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var stock in Model)
+    {
+        <tr>
+            <td>@stock.Id</td>
+            <td>@stock.Shares</td>
+            <td>@stock.PricePerShare.ToString("C2")</td>
+            <td>@stock.PurchaseDate.ToString("MM/dd/yyyy")</td>
+            <td>
+                <a href="javascript:void(0);" class="btn btn-sm @(stock.HasSales ? "btn-secondary disabled" : "btn-danger")"
+                   onclick="@(stock.HasSales ? "return false;" : $"deleteStockLot({stock.Id})")"
+                   @(stock.HasSales ? "aria-disabled=\"true\"" : "")>
+                    <i class="fas fa-trash-alt"></i> Delete
+                </a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
