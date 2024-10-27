@@ -77,30 +77,33 @@
 
     var confirmSaleRequestData = {};
 
-    function displayResults(data) {
-        $("#calculator").hide();
-        $("#results").show();
+  function displayResults(data) {
+    $("#calculator").hide();
+    $("#results").show();
 
-        const formatCurrency = (value) => {
-            return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-        };
-            
-        const setFormattedValue = (elementId, value) => {
-            const element = document.getElementById(elementId);
-            element.textContent = formatCurrency(value);
+    const formatCurrency = (value) => {
+        return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+    };
         
-            if (value < 0) {
-                element.style.color = 'red';
+    const setFormattedValue = (elementId, value, isProfit = false) => {
+            const element = document.getElementById(elementId);
+
+            if (isProfit) {
+                const formattedValue = (value < 0 ? "-" : "+") + formatCurrency(Math.abs(value));
+                element.textContent = formattedValue;
+                element.style.color = value < 0 ? 'red' : 'green';
             } else {
+                element.textContent = formatCurrency(value);
                 element.style.color = 'black';
             }
         };
-                
+
         $("#RemainingShares").text(data.remainingShares);
         setFormattedValue("SoldSharesCostBasis", data.soldSharesCostBasis);
         setFormattedValue("RemainingSharesCostBasis", data.remainingSharesCostBasis);
-        setFormattedValue("Profit", data.profit);
+        setFormattedValue("Profit", data.profit, true);
     }
+
 
     function showConfirmationSale(){
          confirmMessage('Confirm?', 'Are you sure you want to confirm this sale?','Yes', 'No', function () { confirmSale(); });
