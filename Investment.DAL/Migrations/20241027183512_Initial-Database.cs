@@ -36,6 +36,7 @@ namespace Investment.DAL.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    original_shares = table.Column<int>(type: "int", nullable: false),
                     shares = table.Column<int>(type: "int", nullable: false),
                     price_per_share = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     purchase_date = table.Column<DateTime>(type: "datetime", nullable: false)
@@ -75,12 +76,12 @@ namespace Investment.DAL.Migrations
 
             migrationBuilder.InsertData(
                 table: "stock_lot",
-                columns: new[] { "id", "price_per_share", "purchase_date", "shares" },
+                columns: new[] { "id", "original_shares", "price_per_share", "purchase_date", "shares" },
                 values: new object[,]
                 {
-                    { 1, 20m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 100 },
-                    { 2, 30m, new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 150 },
-                    { 3, 10m, new DateTime(2024, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 120 }
+                    { 1, 100, 20m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 100 },
+                    { 2, 150, 30m, new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 150 },
+                    { 3, 120, 10m, new DateTime(2024, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 120 }
                 });
 
             migrationBuilder.CreateIndex(

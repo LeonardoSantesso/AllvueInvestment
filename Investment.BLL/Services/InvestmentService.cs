@@ -135,27 +135,14 @@ public class InvestmentService : IInvestmentService
     public async Task<StockLotDto> CreateStockLot(StockLotDto stockLotData)
     {
         var stockLot = _mapper.Map<StockLot>(stockLotData);
+        stockLot.OriginalShares = stockLotData.Shares;
+
         await _stockLotRepository.AddAsync(stockLot);
         await _stockLotRepository.SaveChangesAsync();
 
         return _mapper.Map<StockLotDto>(stockLot);
     }
-
-    /// <summary>
-    /// Deletes a Stock Lot from the repository by its ID.
-    /// </summary>
-    /// <param name="id">The ID of the Stock Lot to delete.</param>
-    /// <returns>A boolean indicating whether the deletion was successful (true) or if the Stock Lot was not found (false).</returns>
-    public async Task<bool> DeleteStockLotAsync(int id)
-    {
-        var stockLot = await _stockLotRepository.GetByIdAsync(id);
-        if (stockLot == null) return false;
-
-        _stockLotRepository.Delete(stockLot);
-        await _stockLotRepository.SaveChangesAsync();
-        return true;
-    }
-
+    
     #region Private methods
 
     /// <summary>

@@ -31,9 +31,9 @@ public static class StockLotBuilder
     {
         return
         [
-            new StockLot { Id = 1, Shares = 100, PricePerShare = 20, PurchaseDate = new DateTime(2024, 01, 01) },
-            new StockLot { Id = 2, Shares = 150, PricePerShare = 30, PurchaseDate = new DateTime(2024, 02, 01) },
-            new StockLot { Id = 3, Shares = 120, PricePerShare = 10, PurchaseDate = new DateTime(2024, 03, 01) }
+            new StockLot { Id = 1, OriginalShares = 100, Shares = 100, PricePerShare = 20, PurchaseDate = new DateTime(2024, 01, 01) },
+            new StockLot { Id = 2, OriginalShares = 150, Shares = 150, PricePerShare = 30, PurchaseDate = new DateTime(2024, 02, 01) },
+            new StockLot { Id = 3, OriginalShares = 120, Shares = 120, PricePerShare = 10, PurchaseDate = new DateTime(2024, 03, 01) }
         ];
     }
 }

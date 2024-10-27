@@ -17,6 +17,7 @@ public class InvestmentDbContext : DbContext
             entity.ToTable("stock_lot");
             entity.HasKey(e => e.Id);
             entity.Property(e => e.Id).HasColumnName("id").ValueGeneratedOnAdd();
+            entity.Property(e => e.OriginalShares).HasColumnName("original_shares").IsRequired();
             entity.Property(e => e.Shares).HasColumnName("shares").IsRequired();
             entity.Property(e => e.PricePerShare).HasColumnName("price_per_share").IsRequired().HasColumnType("decimal(18,2)");
             entity.Property(e => e.PurchaseDate).HasColumnName("purchase_date").IsRequired().HasColumnType("datetime");
@@ -57,9 +58,9 @@ public class InvestmentDbContext : DbContext
 
         // Add initial default data
         modelBuilder.Entity<StockLot>().HasData(
-            new StockLot { Id = 1, Shares = 100, PricePerShare = 20, PurchaseDate = new DateTime(2024, 01, 01)},
-            new StockLot { Id = 2, Shares = 150, PricePerShare = 30, PurchaseDate = new DateTime(2024, 02, 01)},
-            new StockLot { Id = 3, Shares = 120, PricePerShare = 10, PurchaseDate = new DateTime(2024, 03, 01)}
+            new StockLot { Id = 1, OriginalShares = 100, Shares = 100, PricePerShare = 20, PurchaseDate = new DateTime(2024, 01, 01)},
+            new StockLot { Id = 2, OriginalShares = 150, Shares = 150, PricePerShare = 30, PurchaseDate = new DateTime(2024, 02, 01)},
+            new StockLot { Id = 3, OriginalShares = 120, Shares = 120, PricePerShare = 10, PurchaseDate = new DateTime(2024, 03, 01)}
         );
 
         base.OnModelCreating(modelBuilder);

@@ -8,9 +8,7 @@ public class ApplicationProfile : Profile
 {
     public ApplicationProfile()
     {
-        CreateMap<StockLot, StockLotDto>()
-            .ForMember(dest => dest.HasSales, opt => opt.MapFrom(src => src.StockLotSales != null && src.StockLotSales.Any()))
-            .ReverseMap();
+        CreateMap<StockLot, StockLotDto>().ReverseMap();
         CreateMap<SaleRecord, SaleRecordDto>().ReverseMap();
         CreateMap<SaleRecord, SaleRecordDetailsDto>()
             .ForMember(dest => dest.SaleRecordDetailItems, opt => opt.MapFrom(src => src.StockLotSales))

@@ -2,30 +2,38 @@
 
 <table class="table table-striped table-hover text-center">
     <thead class="thead-dark">
-    <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Shares</th>
-        <th scope="col">Price per Share</th>
-        <th scope="col">Purchase Date</th>
-        <th scope="col">Actions</th>
-    </tr>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Price per Share</th>
+            <th scope="col">Total Purchased</th>
+            <th scope="col">Purchase Date</th>
+            <th scope="col">Remaining Shares</th>
+            <th scope="col">Remaining %</th>
+        </tr>
     </thead>
     <tbody>
-    @foreach (var stock in Model)
-    {
-        <tr>
-            <td>@stock.Id</td>
-            <td>@stock.Shares</td>
-            <td>@stock.PricePerShare.ToString("C2")</td>
-            <td>@stock.PurchaseDate.ToString("MM/dd/yyyy")</td>
-            <td>
-                <a href="javascript:void(0);" class="btn btn-sm @(stock.HasSales ? "btn-secondary disabled" : "btn-danger")"
-                   onclick="@(stock.HasSales ? "return false;" : $"deleteStockLot({stock.Id})")"
-                   @(stock.HasSales ? "aria-disabled=\"true\"" : "")>
-                    <i class="fas fa-trash-alt"></i> Delete
-                </a>
-            </td>
-        </tr>
-    }
+        @foreach (var stock in Model)
+        {
+            <tr>
+                <td>@stock.Id</td>
+                <td>@stock.PricePerShare.ToString("C2")</td>
+                <td>@stock.OriginalShares</td>
+                <td>@stock.PurchaseDate.ToString("MM/dd/yyyy")</td>
+                <td>@stock.Shares</td>
+                <td>
+                    <div class="progress position-relative" style="height: 25px; width: 100px; margin: auto; border: 1px solid #ddd; border-radius: 4px;">
+                        <div class="progress-bar bg-primary" role="progressbar" 
+                             style="width: @stock.RemainingPercentage%;" 
+                             aria-valuenow="@stock.RemainingPercentage" 
+                             aria-valuemin="0" aria-valuemax="100">
+                        </div>
+                        <span class="position-absolute w-100" 
+                              style="color: @(stock.RemainingPercentage > 50 ? "#FFF" : "#000"); font-weight: bold; line-height: 25px; top: 0; left: 0;">
+                            @stock.RemainingPercentage%
+                        </span>
+                    </div>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

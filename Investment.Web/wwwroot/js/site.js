@@ -119,8 +119,8 @@ function showMessage(type, message) {
 }
 
 
-//Confirm message
-function confirmDeleteMessage(title, message, confirmButtonText, cancelButtonText, callbackYes, callBackNo) {
+// Confirm message
+function confirmMessage(title, message, confirmButtonText, cancelButtonText, callbackYes, callBackNo) {
 
     // Function parameter for callback
     var fnCallbackYes = DefaultFor(callbackYes, null);

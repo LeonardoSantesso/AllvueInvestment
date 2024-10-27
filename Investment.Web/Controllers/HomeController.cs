@@ -152,48 +152,5 @@ namespace Investment.Web.Controllers
                 return Json(result);
             }
         }
-
-        /// <summary>
-        /// Deletes a specified Stock Lot by its ID and returns a JSON result indicating success or failure.
-        /// </summary>
-        /// <param name="id">The ID of the Stock Lot to be deleted.</param>
-        /// <returns>A JSON result with success status and a message.</returns>
-        [HttpGet]
-        public async Task<IActionResult> DeleteStockLot(int id)
-        {
-            try
-            {
-                var isDeleted = await _investmentService.DeleteStockLotAsync(id);
-
-                if (isDeleted)
-                {
-                    var result = new JsonDataResult
-                    {
-                        IsSuccess = true,
-                        Message = new JsonResultMessage { Message = "Stock Lot deleted successfully." }
-                    };
-                    return Json(result);
-                }
-                else
-                {
-                    var result = new JsonDataResult
-                    {
-                        IsSuccess = false,
-                        Error = new JsonResultError { Message = "Stock Lot not found.", Title = "Delete Error" }
-                    };
-                    return Json(result);
-                }
-            }
-            catch (Exception ex)
-            {
-                var result = new JsonDataResult
-                {
-                    IsSuccess = false,
-                    Error = new JsonResultError { Message = ex.Message, Title = "An error occurred while deleting the Stock Lot." }
-                };
-                return Json(result);
-            }
-        }
-
     }
 }

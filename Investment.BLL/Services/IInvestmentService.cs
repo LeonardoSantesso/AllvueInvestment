@@ -10,5 +10,4 @@ public interface IInvestmentService
     Task<List<SaleRecordDto>> GetAllSaleRecordsAsync();
     Task<SaleRecordDetailsDto> GetSaleRecordDetailsByIdAsync(int id);
     Task<StockLotDto> CreateStockLot(StockLotDto stockLotData);
-    Task<bool> DeleteStockLotAsync(int id);
 }

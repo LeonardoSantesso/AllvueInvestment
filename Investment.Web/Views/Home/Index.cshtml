@@ -32,30 +32,7 @@
             showModalCreateStockLot();
         });
     });
-
-    function deleteStockLot(id){
-        confirmDeleteMessage('Confirm?', 'Are you sure you want to delete this stock lot?','Yes', 'No', function () { confirmDelete(id); });
-    }
-
-    function confirmDelete(id){
-        CallAjax('@Url.Action("DeleteStockLot", "Home")' + '?id=' + id, {
-            type: 'GET',
-            contentType: 'application/json',
-            data: JSON.stringify({ id: id }),
-            fnDone: function (response) {
-            if (response.isSuccess) {
-                showMessage("1", response.message.message);
-                RefreshGrid();
-            } else {
-                showMessage("3", response.error.message);
-            }
-            },
-            fnError: function (xhr, ajaxOptions, thrownError) {
-                showMessage("3", "Error: " + xhr.statusText);
-            }
-        });
-    }
-
+    
     function RefreshGrid() {
         CallAjax('@Url.Action("GetStocks", "Home")', {
             type: 'GET',

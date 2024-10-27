@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Investment.DAL.Migrations
 {
     [DbContext(typeof(InvestmentDbContext))]
-    [Migration("20241027020058_Initial-Database")]
+    [Migration("20241027183512_Initial-Database")]
     partial class InitialDatabase
     {
         /// <inheritdoc />
@@ -68,6 +68,10 @@ namespace Investment.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("OriginalShares")
+                        .HasColumnType("int")
+                        .HasColumnName("original_shares");
+
                     b.Property<decimal>("PricePerShare")
                         .HasColumnType("decimal(18,2)")
                         .HasColumnName("price_per_share");
@@ -88,6 +92,7 @@ namespace Investment.DAL.Migrations
                         new
                         {
                             Id = 1,
+                            OriginalShares = 100,
                             PricePerShare = 20m,
                             PurchaseDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Shares = 100
@@ -95,6 +100,7 @@ namespace Investment.DAL.Migrations
                         new
                         {
                             Id = 2,
+                            OriginalShares = 150,
                             PricePerShare = 30m,
                             PurchaseDate = new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Shares = 150
@@ -102,6 +108,7 @@ namespace Investment.DAL.Migrations
                         new
                         {
                             Id = 3,
+                            OriginalShares = 120,
                             PricePerShare = 10m,
                             PurchaseDate = new DateTime(2024, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Shares = 120

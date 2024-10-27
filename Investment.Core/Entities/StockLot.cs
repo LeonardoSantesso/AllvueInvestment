@@ -4,6 +4,7 @@ namespace Investment.Core.Entities;
 
 public class StockLot : BaseEntity
 {
+    public int OriginalShares { get; set; }
     public int Shares { get; set; }
     public decimal PricePerShare { get; set; }
     public DateTime PurchaseDate { get; set; }

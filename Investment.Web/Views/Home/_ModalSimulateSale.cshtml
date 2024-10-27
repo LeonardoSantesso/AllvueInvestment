@@ -102,6 +102,11 @@
         setFormattedValue("Profit", data.profit);
     }
 
+    function showConfirmationSale(){
+         confirmMessage('Confirm?', 'Are you sure you want to confirm this sale?','Yes', 'No', function () { confirmSale(); });
+        return false;
+    }
+
     function confirmSale(){
         if (confirmSaleRequestData) {
             let token = $('input[name="__RequestVerificationToken"]').val();
@@ -164,7 +169,7 @@
         });
 
         $("#btnConfirmSale").click(function() {
-            confirmSale();
+            showConfirmationSale();
         });
     });
 </script>

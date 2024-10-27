@@ -35,7 +35,7 @@
                         <td>@stock.TotalSaleValue.ToString("C2")</td>
                         <td class="font-weight-bold">
                             <span class="@(stock.TotalProfit < 0 ? "text-danger" : "text-success")">
-                                @(Math.Abs(stock.TotalProfit).ToString("C2"))
+                                @(stock.TotalProfit < 0 ? "-" : "+") @(Math.Abs(stock.TotalProfit).ToString("C2"))
                             </span>
                         </td>
                         <td>@stock.CostBasisPerSoldShare.ToString("C2")</td>
