@@ -111,7 +111,7 @@ public class InvestmentService : IInvestmentService
     /// <returns>A list of <see cref="SaleRecordDto"/> objects representing each sale record in the system.</returns>
     public async Task<List<SaleRecordDto>> GetAllSaleRecordsAsync()
     {
-        var sales = await _saleRecordRepository.GetAllAsync();
+        var sales = await _saleRecordRepository.GetAllAsync(i => i.StockLotSales);
         return _mapper.Map<List<SaleRecordDto>>(sales);
     }
 

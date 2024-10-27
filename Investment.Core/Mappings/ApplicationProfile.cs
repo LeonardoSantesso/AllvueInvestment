@@ -9,7 +9,10 @@ public class ApplicationProfile : Profile
     public ApplicationProfile()
     {
         CreateMap<StockLot, StockLotDto>().ReverseMap();
-        CreateMap<SaleRecord, SaleRecordDto>().ReverseMap();
+        CreateMap<SaleRecord, SaleRecordDto>()
+            .ForMember(dest => dest.TotalSharesSold, opt => 
+                opt.MapFrom(src => src.StockLotSales.Any() ? src.StockLotSales.Sum(i => i.SharesSold) : 0))
+            .ReverseMap();
         CreateMap<SaleRecord, SaleRecordDetailsDto>()
             .ForMember(dest => dest.SaleRecordDetailItems, opt => opt.MapFrom(src => src.StockLotSales))
             .ForMember(dest => dest.TotalSold, opt => 
