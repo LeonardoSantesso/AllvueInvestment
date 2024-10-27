@@ -128,12 +128,12 @@
                         showMessage("3", response.error.message);
                     }
                 },
-                fnError: function (xhr, ajaxOptions, thrownError) {
-                    alert(xhr.statusText);
+                fnError: function (xhr, ajaxOptions, thrownError) {                    
+                    showMessage("3", xhr.statusText);
                 }
             });
-        } else {
-            alert("No calculation data found. Please calculate before confirming.");
+        } else {            
+            showMessage("3", "No calculation data found. Please calculate before confirming.");
         }
     }    
 
