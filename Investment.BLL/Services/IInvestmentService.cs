@@ -9,5 +9,5 @@ public interface IInvestmentService
     Task<bool> ConfirmSaleAsync(ConfirmSaleDto confirmData);
     Task<List<SaleRecordDto>> GetAllSaleRecordsAsync();
     Task<SaleRecordDetailsDto> GetSaleRecordDetailsByIdAsync(int id);
-    Task<StockLotDto> CreateStockLot(StockLotDto stockLotData);
+    Task<StockLotDto> CreateStockLotAsync(StockLotDto stockLotData);
 }

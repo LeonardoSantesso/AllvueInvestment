@@ -8,8 +8,8 @@ namespace Investment.BLL.Services;
 
 /// <summary>
 /// Provides core business logic for managing investments, including calculating potential sale outcomes
-/// (profit, cost basis), and recording confirmed sales transactions. This service interacts with stock lots and 
-/// sale records, utilizing various cost-basis strategies such as FIFO and LIFO.
+/// (profit, cost basis), and recording confirmed sales transactions.
+/// This service interacts with stock lots and sale records, utilizing various cost-basis strategies such as FIFO and LIFO.
 /// </summary>
 public class InvestmentService : IInvestmentService
 {
@@ -67,8 +67,9 @@ public class InvestmentService : IInvestmentService
         foreach (var item in confirmData.StockLotItems)
         {
             var lot = await _stockLotRepository.GetByIdAsync(item.Id);
+
             if (lot == null || lot.Shares < item.Shares)
-                throw new InvalidOperationException("StockLot does not have enough shares.");
+                throw new InvalidOperationException("Stock Lot does not have enough shares.");
 
             decimal costBasisForThisLot = item.Shares * lot.PricePerShare;
             totalCostBasis += costBasisForThisLot;
@@ -132,7 +133,7 @@ public class InvestmentService : IInvestmentService
     /// </summary>
     /// <param name="stockLotData">Data for the new StockLot.</param>
     /// <returns>The newly created StockLot as a DTO.</returns>
-    public async Task<StockLotDto> CreateStockLot(StockLotDto stockLotData)
+    public async Task<StockLotDto> CreateStockLotAsync(StockLotDto stockLotData)
     {
         var stockLot = _mapper.Map<StockLot>(stockLotData);
         stockLot.OriginalShares = stockLotData.Shares;

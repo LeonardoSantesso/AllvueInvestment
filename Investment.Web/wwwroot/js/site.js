@@ -38,7 +38,7 @@ function CloseModal(idModal, data) {
     $('#' + idModal).modal('hide').data(data);
 }
 
-// function that removes a modal
+// function that removes all modals
 function CloseAllModals() {
     $('.modal').modal("hide");
 }

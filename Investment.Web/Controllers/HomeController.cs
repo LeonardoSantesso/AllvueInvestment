@@ -62,7 +62,7 @@ namespace Investment.Web.Controllers
         {
             try
             {
-                var stockLot = await _investmentService.CreateStockLot(postData);
+                var stockLot = await _investmentService.CreateStockLotAsync(postData);
 
                 var result = new JsonDataResult
                 {

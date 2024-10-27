@@ -39,8 +39,8 @@
             fnDone: function (data) {
                 $('#stockGrid').html(data);
             },
-            fnError: function () {
-                alert("Failed to refresh the grid.");
+            fnError: function (xhr, ajaxOptions, thrownError) {     
+                showMessage("3", xhr.statusText);
             }
         });
     }
@@ -49,7 +49,7 @@
     function showModalSimulateSale() {
 
         function callBackModalSimulateSale(data) {
-            console.log("Modal closed", data);
+            
         }
                 
         var url = '@Url.Action("ModalSimulateSale", "Home")';
@@ -60,7 +60,7 @@
     function showModalCreateStockLot() {
 
         function callBackModalCreateStockLot(data) {
-            console.log("Modal closed", data);
+            
         }
                 
         var url = '@Url.Action("ModalCreateStockLot", "Home")';
